@@ -24,8 +24,9 @@ export default function Home() {
     try {
       const response = await apiClient.get<scoreDataTypes[]>(`/login/${id1.current}/${id2.current}/${id3.current}/${password.current}`)
       if (response.data.length && allScoreData.length) {
+        console.log(response.data)
         //最新のデータと前回のデータが一致
-        if (allScoreData[allScoreData.length - 1][0][1] == response.data[0][1]) {
+        if (allScoreData[allScoreData.length - 1][0][1] == response.data[0][1] && allScoreData[allScoreData.length - 1][1][1] == response.data[1][1] && allScoreData[allScoreData.length - 1][2][1] == response.data[2][1]) {
           console.log("最新のデータと前回のデータが一致");
         }
         else {
@@ -45,6 +46,8 @@ export default function Home() {
       setError(err.message)
     }
   }
+  //localの初期化
+  // localStorage.removeItem("allScoreData");
   //データの読み込み
   useEffect(() => {
     if (!didMount.current) {
@@ -63,7 +66,7 @@ export default function Home() {
     }
   }, [allScoreData]);
   return (
-    <div>
+    <div className=" min-h-[100svh] flex flex-col justify-evenly">
       {error ? <p className="text-center">{error}アカウント情報が間違っているか通信環境が悪い可能性があります。</p> : null}
       <button onClick={fetchData} className=" bg-sky-400 block mx-auto p-2 shadow-xl m-2 rounded-xl">更新</button>
       {isLoading ? (!error ? <p className="text-center my-4">loading...</p> : null)

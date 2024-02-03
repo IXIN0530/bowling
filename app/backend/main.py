@@ -8,6 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from fastapi import FastAPI
 import json
+from functions import functions
 
 app=FastAPI()
 
@@ -64,18 +65,16 @@ async def get_score_data(id1:int,id2:int,id3:int,password:str):
 
     scoredatas=driver.find_elements(By.XPATH,"//tr")
     when_score_data=driver.find_element(By.XPATH,'/html/body/div/div[2]/section/p/span[2]')
-    today_score_data=[["when",when_score_data.text]]
+
+    #データの日付を配列にして格納
+    today_score_data=functions.get_day(when_score_data.text)
     for data in scoredatas:
         soup=BeautifulSoup(data.get_attribute("innerHTML"),"html.parser")
         today_score_data.append([soup.find("th").text,soup.find("td").text])
-    # current_url=driver.current_url
-    # res=requests.get(current_url)
-    # soup=BeautifulSoup(res.text,"html.parser")
-
-    # elements=soup.find_all("table")
-    # print(res.text)
-
-    # json_data=json.dumps(today_score_data,ensure_ascii=False)
-    # print(json_data)
-        
+    
+    #データをjsonファイルに保存（一応過去のデータがないと後々）
     return today_score_data
+
+def save_data(data):
+    with open("data.json","w") as f:
+        json.dump(data,f,indent=4,ensure_ascii=False)
