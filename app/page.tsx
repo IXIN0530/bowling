@@ -53,10 +53,12 @@ export default function Home() {
       if (jsonData) {
         const data = JSON.parse(jsonData);
         setAllScoreData(data);
+        console.log("getItemしました", data)
       }
     } else {
-      if (scoreData.length) {
+      if (allScoreData.length) {
         localStorage.setItem("allScoreData", JSON.stringify(allScoreData));
+        console.log("setItemしました", allScoreData)
       }
     }
   }, [allScoreData]);
