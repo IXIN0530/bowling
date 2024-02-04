@@ -4,7 +4,7 @@ type Props = {
 }
 const DisplayScoreData = ({ scoreData }: Props) => {
   return (
-    <div className="my-4 flex flex-col border border-black w-4/5 mx-auto">
+    <div className="flex flex-col  w-4/5 mx-auto">
       {scoreData ? scoreData.map((item) => (
         <div className=" flex justify-between">
           <div className="bg-sky-200 w-1/2 overflow-hidden pt-1">{item[0]}</div>

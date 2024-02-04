@@ -73,6 +73,7 @@ async def get_score_data(id1:int,id2:int,id3:int,password:str):
         today_score_data.append([soup.find("th").text,soup.find("td").text])
     
     #データをjsonファイルに保存（一応過去のデータがないと後々）
+    # save_data(today_score_data)
     return today_score_data
 
 def save_data(data):

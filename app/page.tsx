@@ -5,9 +5,14 @@ import { allScoreDataType, scoreDataTypes } from "./types";
 import apiClient from "./backend/apiClient";
 import React, { use, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import DataList from "./components/dataList";
+import ScoreModal from "./components/scoreModal";
 
 export default function Home() {
-  const [scoreData, setScoreData] = useState<scoreDataTypes[]>([]);
+  //スコア情報のモーダルが開かれているか
+  const [isScoreOpen, setIsScoreOpen] = useState<boolean>(false);
+  const [scoreModalData, setScoreModalData] = useState<scoreDataTypes[]>([]);
+
   const [allScoreData, setAllScoreData] = useState<allScoreDataType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -17,6 +22,11 @@ export default function Home() {
   const id3 = useRef(797);
   const password = useRef("0530masa");
   const didMount = useRef(false);
+
+  //モーダルのクローズ処理
+  const closeScoreModal = () => {
+    setIsScoreOpen(false);
+  }
   //データの更新関数
   const fetchData = async () => {
     setIsLoading(true);
@@ -66,12 +76,20 @@ export default function Home() {
     }
   }, [allScoreData]);
   return (
-    <div className=" min-h-[100svh] flex flex-col justify-evenly">
-      {error ? <p className="text-center">{error}アカウント情報が間違っているか通信環境が悪い可能性があります。</p> : null}
-      <button onClick={fetchData} className=" bg-sky-400 block mx-auto p-2 shadow-xl m-2 rounded-xl">更新</button>
-      {isLoading ? (!error ? <p className="text-center my-4">loading...</p> : null)
-        : allScoreData.map((item, index) => (<DisplayScoreData scoreData={item} />))
-      }
+    <div className=" mx-2 min-h-[100svh] grid grid-rows-10">
+      {scoreModalData && <ScoreModal closeScoreModal={closeScoreModal} isOpen={isScoreOpen} scoreModalData={scoreModalData} />}
+      <div className=" row-span-1 bg-orange-100">
+      </div>
+      <div className="row-span-4 bg-slate-300">
+        {isLoading ? (!error ? <p className="text-center my-4">loading...</p> : null)
+          : allScoreData.map((item, index) => (<DataList data={item} setScoreModalData={setScoreModalData} setIsScoreOpen={setIsScoreOpen} />))
+        }
+      </div>
+      <div className="row-span-4 bg-slate-400"></div>
+      <div className="row-span-1 bg-slate-500">
+        {error ? <p className="text-center">{error}アカウント情報が間違っているか通信環境が悪い可能性があります。</p> : null}
+        <button onClick={fetchData} className=" bg-emerald-400 block px-4 mx-auto p-2 shadow-xl m-2 rounded-xl text-white">更新</button>
+      </div>
     </div>
   );
 }
