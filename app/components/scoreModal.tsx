@@ -1,6 +1,6 @@
+"use client"
 import { scoreDataTypes } from "../types";
 import { MouseEvent } from "react";
-import { motion } from "framer-motion";
 import DisplayScoreData from "./diplayScoreData";
 type Props = {
   isOpen: boolean;

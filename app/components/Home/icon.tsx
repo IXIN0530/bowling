@@ -1,3 +1,4 @@
+"use client"
 import { motion } from "framer-motion";
 import { easeOut } from "framer-motion";
 const Icon = () => {

@@ -1,9 +1,7 @@
 "use client"
-import DisplayScoreData from "./components/diplayScoreData";
 import { allScoreDataType, scoreDataTypes } from "./types";
 import apiClient from "./backend/apiClient";
-import React, { use, useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import React, { useEffect, useRef, useState } from "react";
 import DataList from "./components/dataList";
 import ScoreModal from "./components/scoreModal";
 import { motion } from "framer-motion";
@@ -27,7 +25,7 @@ export default function Home() {
   const [id2, setId2] = useState<number>(0);
   const [id3, setId3] = useState<number>(0);
   const [pass, setPass] = useState<string>("");
-  const didMount = useRef(false);
+  const didMount = useRef<boolean>(false);
 
   //モーダルのクローズ処理
   const closeScoreModal = () => {
@@ -116,7 +114,7 @@ export default function Home() {
       </div>
       <div className="row-span-4 bg-slate-300">
         {isLoading ? (!error ? <p className="text-center my-4">loading...</p> : null)
-          : allScoreData.map((item, index) => (<DataList data={item} setScoreModalData={setScoreModalData} setIsScoreOpen={setIsScoreOpen} />))
+          : allScoreData.map((item, index) => (<DataList key={index} data={item} setScoreModalData={setScoreModalData} setIsScoreOpen={setIsScoreOpen} />))
         }
       </div>
       <div className="row-span-4 bg-slate-400">
@@ -131,7 +129,7 @@ export default function Home() {
         </motion.div>
         <button onClick={fetchData} className="  bg-gradient-to-br from-emerald-600 to-emerald-400 block px-8 p-2 shadow-xl m-2 rounded-xl text-white font-lg">更新</button>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" onClick={() => setIsMenuOpen(true)} className="w-10 h-10 my-auto text-white cursor-pointer">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
         </svg>
       </div>
       <MenuModal
