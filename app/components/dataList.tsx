@@ -11,7 +11,7 @@ const DataList = ({ data, setScoreModalData, setIsScoreOpen }: Props) => {
     console.log("クリックされたで");
   }
   return (
-    <div className="w-full grid grid-cols-3 bg-sky-200 py-2" onClick={clicked}>
+    <div className="w-full grid grid-cols-3 bg-gray-500 py-2 text-white" onClick={clicked}>
       <div className=" col-span-1">
         <p className="text-center">
           {data[0][1]}/{data[1][1]}/{data[2][1]}
@@ -19,12 +19,12 @@ const DataList = ({ data, setScoreModalData, setIsScoreOpen }: Props) => {
       </div>
       <div className="col-span-1">
         <p className="text-center">
-          {data[3][0]}:{data[3][1]}
+          {data[3][1]}
         </p>
       </div>
       <div className="col-span-1">
         <p className="text-center">
-          {data[4][0]}:{data[4][1]}
+          {data[4][1]}
         </p>
       </div>
     </div>
