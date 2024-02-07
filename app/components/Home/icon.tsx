@@ -7,7 +7,8 @@ const Icon = () => {
       className="my-auto select-none"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, y: [70, -10, 0] }}
-      transition={{ duration: 0.7 }}>
+      transition={{ duration: 0.7 }}
+    >
       <div className="flex items-center ">
         <motion.div className="w-8 h-8  border border-white select-none"
           whileHover={{ scale: 1.5, rotate: 270, borderRadius: 100 + "%" }}

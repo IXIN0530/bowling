@@ -9,6 +9,7 @@ import ScoreModal from "./components/scoreModal";
 import { motion } from "framer-motion";
 import MenuModal from "./components/menuModal";
 import Icon from "./components/Home/icon";
+import { stringify } from "querystring";
 
 export default function Home() {
   //スコア情報のモーダルが開かれているか
@@ -22,10 +23,10 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
-  const id1 = useRef(1182);
-  const id2 = useRef(524);
-  const id3 = useRef(797);
-  const password = useRef("0530masa");
+  const [id1, setId1] = useState<number>(0);
+  const [id2, setId2] = useState<number>(0);
+  const [id3, setId3] = useState<number>(0);
+  const [pass, setPass] = useState<string>("");
   const didMount = useRef(false);
 
   //モーダルのクローズ処理
@@ -37,11 +38,11 @@ export default function Home() {
     setIsLoading(true);
     setError("");
     try {
-      const response = await apiClient.get<scoreDataTypes[]>(`/login/${id1.current}/${id2.current}/${id3.current}/${password.current}`)
+      const response = await apiClient.get<scoreDataTypes[]>(`/login/${id1}/${id2}/${id3}/${pass}`)
       if (response.data.length && allScoreData.length) {
         console.log(response.data)
-        //最新のデータと前回のデータが一致
-        if (allScoreData[allScoreData.length - 1][0][1] == response.data[0][1] && allScoreData[allScoreData.length - 1][1][1] == response.data[1][1] && allScoreData[allScoreData.length - 1][2][1] == response.data[2][1]) {
+        //最新のデータと今取得したデータが一致
+        if (allScoreData[allScoreData.length - 1][3][1] == response.data[3][1] && allScoreData[allScoreData.length - 1][0][1] == response.data[0][1] && allScoreData[allScoreData.length - 1][1][1] == response.data[1][1] && allScoreData[allScoreData.length - 1][2][1] == response.data[2][1]) {
           console.log("最新のデータと前回のデータが一致");
         }
         else {
@@ -56,28 +57,48 @@ export default function Home() {
         setAllScoreData([...allScoreData, response.data]);
       }
 
-      setIsLoading(false);
+
     } catch (err: any) {
       setError(err.message)
       alert("アカウント情報が間違っているか通信環境が悪い可能性があります。")
     }
+    setIsLoading(false);
   }
   //localの初期化
-  // localStorage.removeItem("allScoreData");
+  // localStorage.removeItem("allScoreData" + stringify({ id1, id2, id3 }));
   //データの読み込み
   useEffect(() => {
     if (!didMount.current) {
       didMount.current = true;
-      const jsonData = localStorage.getItem("allScoreData");
-      if (jsonData) {
-        const data = JSON.parse(jsonData);
-        setAllScoreData(data);
-        console.log("getItemしました", data)
+      const jsonId1 = localStorage.getItem("id1");
+      const jsonId2 = localStorage.getItem("id2");
+      const jsonId3 = localStorage.getItem("id3");
+      const jsonPass = localStorage.getItem("pass");
+      console.log("getItemしました", jsonId1, jsonId2, jsonId3, jsonPass);
+      if (jsonId1 && jsonId2 && jsonId3 && jsonPass) {
+        const id1 = JSON.parse(jsonId1);
+        const id2 = JSON.parse(jsonId2);
+        const id3 = JSON.parse(jsonId3);
+        const pass = JSON.parse(jsonPass);
+        setId1(Number(id1));
+        setId2(Number(id2));
+        setId3(Number(id3));
+        setPass(pass);
+        const jsonData = localStorage.getItem("allScoreData" + stringify({ id1, id2, id3 }));
+        if (jsonData) {
+          const data = JSON.parse(jsonData);
+          setAllScoreData(data);
+        }
+        console.log("getItemしました", Number(id1), Number(id2), Number(id3), pass);
       }
     } else {
       if (allScoreData.length) {
-        localStorage.setItem("allScoreData", JSON.stringify(allScoreData));
-        console.log("setItemしました", allScoreData)
+        localStorage.setItem("allScoreData" + stringify({ id1, id2, id3 }), JSON.stringify(allScoreData));
+        localStorage.setItem("id1", JSON.stringify(id1));
+        localStorage.setItem("id2", JSON.stringify(id2));
+        localStorage.setItem("id3", JSON.stringify(id3));
+        localStorage.setItem("pass", JSON.stringify(pass));
+        console.log("setItemしました", allScoreData, id1, id2, id3, pass);
       }
     }
   }, [allScoreData]);
@@ -105,15 +126,25 @@ export default function Home() {
         <motion.div
           className="my-auto"
           animate={isLoading ? { rotate: [0, 180, 360], scale: [1, 1.5, 1] } : {}}
-          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}>
+          transition={isLoading ? { duration: 2, repeat: Infinity, ease: "linear" } : {}}>
           <Icon />
         </motion.div>
-        <button onClick={fetchData} className=" bg-emerald-400 block px-8 p-2 shadow-xl m-2 rounded-xl text-white">更新</button>
+        <button onClick={fetchData} className="  bg-gradient-to-br from-emerald-600 to-emerald-400 block px-8 p-2 shadow-xl m-2 rounded-xl text-white font-lg">更新</button>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" onClick={() => setIsMenuOpen(true)} className="w-10 h-10 my-auto text-white cursor-pointer">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
         </svg>
       </div>
-      <MenuModal isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
+      <MenuModal
+        isOpen={isMenuOpen}
+        setIsOpen={setIsMenuOpen}
+        id1={id1}
+        setId1={setId1}
+        id2={id2}
+        setId2={setId2}
+        id3={id3}
+        setId3={setId3}
+        password={pass}
+        setPassword={setPass} />
     </div>
   );
 }

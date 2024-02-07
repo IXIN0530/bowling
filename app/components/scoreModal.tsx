@@ -26,12 +26,13 @@ const ScoreModal = ({ isOpen, scoreModalData, closeScoreModal }: Props) => {
   return (
     <div className="fixed z-50 inset-2 overflow-y-auto h-4/5"
       onClick={hundleBackClick}>
-      <div className="fixed inset-0 bg-black opacity-75 transition-opacity"></div>
+      <div className="fixed inset-0 bg-black opacity-65 transition-opacity"></div>
 
-      <div className="bg-white mx-2 shadow-xl transform transition-all my-5"
+      <div className=" bg-gradient-to-b from-gray-800 to-gray-600 mx-2 shadow-xl rounded-xl transform transition-all my-5"
         onClick={hundleModalClick}>
         {/* ここからがmodalの中身 */}
         <DisplayScoreData scoreData={scoreModalData} />
+        <div className="pt-8"></div>
       </div>
     </div>
   )
