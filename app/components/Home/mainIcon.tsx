@@ -1,7 +1,7 @@
 "use client"
 import { motion } from "framer-motion";
 import { easeOut } from "framer-motion";
-const Icon = () => {
+const MainIcon = () => {
   return (
     <motion.div
       className="my-auto select-none"
@@ -40,4 +40,4 @@ const Icon = () => {
   )
 }
 
-export default Icon;
+export default MainIcon;

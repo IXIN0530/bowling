@@ -6,7 +6,7 @@ import DataList from "./components/dataList";
 import ScoreModal from "./components/scoreModal";
 import { motion } from "framer-motion";
 import MenuModal from "./components/menuModal";
-import Icon from "./components/Home/icon";
+import MainIcon from "./components/Home/mainIcon";
 import { stringify } from "querystring";
 
 export default function Home() {
@@ -125,7 +125,7 @@ export default function Home() {
           className="my-auto"
           animate={isLoading ? { rotate: [0, 180, 360], scale: [1, 1.5, 1] } : {}}
           transition={isLoading ? { duration: 2, repeat: Infinity, ease: "linear" } : {}}>
-          <Icon />
+          <MainIcon />
         </motion.div>
         <button onClick={fetchData} className="  bg-gradient-to-br from-emerald-600 to-emerald-400 block px-8 p-2 shadow-xl m-2 rounded-xl text-white font-lg">更新</button>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" onClick={() => setIsMenuOpen(true)} className="w-10 h-10 my-auto text-white cursor-pointer">
