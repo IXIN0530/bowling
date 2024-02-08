@@ -62,8 +62,11 @@ const MenuModal = ({ isOpen, setIsOpen, id1, setId1, id2, setId2, id3, setId3, p
         <motion.div className="min-h-full grid grid-cols-2"
           animate={{ x: isLoginOpen ? "-50%" : 0 }}>
           <div className="grid grid-rows-10 col-span-1">
-            <div className="row-span-2 flex flex-col justify-center">
-              <p className="text-white text-center">メニュー</p>
+            <div className="row-span-1 flex flex-col justify-center">
+              <p className="text-white text-center font-bold">メニュー</p>
+            </div>
+            <div className=" mx-4 row-span-1">
+              <p className="text-center text-white text-xs italic">Splitterはラウンドワンボウリングのスコアを管理するアプリです</p>
             </div>
             <div className="row-span-6">
               {/* <p className="text-white">menues</p> */}

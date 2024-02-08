@@ -16,6 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <title>Splitter</title>
+      </head>
       <body className={inter.className + " bg-gray-300 "}>{children}</body>
     </html>
   );

@@ -105,7 +105,9 @@ export default function Home() {
       {scoreModalData && <ScoreModal closeScoreModal={closeScoreModal} isOpen={isScoreOpen} scoreModalData={scoreModalData} />}
       <div className="flex flex-col justify-between row-span-1  bg-gradient-to-b from-gray-600 to-gray-400">
         {/* {error ? <p className="text-center">{error}アカウント情報が間違っているか通信環境が悪い可能性があります。</p> : null} */}
-        <div></div>
+        <div className="pt-2">
+          <p className="text-center text-white text-xl">Splitter</p>
+        </div>
         <div className="grid grid-cols-3  text-white ">
           <p className="col-span-1 text-center">来店日</p>
           <p className="col-span-1 text-center">アベレージ</p>
