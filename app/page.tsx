@@ -1,6 +1,5 @@
 "use client"
 import { allScoreDataType, scoreDataTypes } from "./types";
-import apiClient from "./backend/apiClient";
 import React, { useEffect, useRef, useState } from "react";
 import DataList from "./components/dataList";
 import ScoreModal from "./components/scoreModal";
@@ -8,6 +7,7 @@ import { motion } from "framer-motion";
 import MenuModal from "./components/menuModal";
 import MainIcon from "./components/Home/mainIcon";
 import { stringify } from "querystring";
+import api from "./components/api";
 
 export default function Home() {
   //スコア情報のモーダルが開かれているか
@@ -36,7 +36,7 @@ export default function Home() {
     setIsLoading(true);
     setError("");
     try {
-      const response = await apiClient.get<scoreDataTypes[]>(`/login/${id1}/${id2}/${id3}/${pass}`)
+      const response = await api.get<scoreDataTypes[]>(`/login/${id1}/${id2}/${id3}/${pass}`)
       if (response.data.length && allScoreData.length) {
         console.log(response.data)
         //最新のデータと今取得したデータが一致
