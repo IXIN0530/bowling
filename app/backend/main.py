@@ -23,7 +23,7 @@ app.add_middleware(
 
 @app.get("/")
 async def read_root():
-    return{"item_id":21,"q":"hello"}
+    return{"item_id":21,"q":"デプロイ1"}
 
 @app.get("/login/{id1}/{id2}/{id3}/{password}")
 async def get_score_data(id1:int,id2:int,id3:int,password:str):

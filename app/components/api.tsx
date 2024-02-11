@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'https://bowback-p4mw8ucv8-ixins-projects.vercel.app/',
+  baseURL: 'https://bowback-gso78hlnf-ixins-projects.vercel.app',
   timeout: 20000,
 });
 
