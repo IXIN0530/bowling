@@ -31,7 +31,7 @@ async def get_score_data(id1:int,id2:int,id3:int,password:str):
     #ヘッドレスモードでの実行
     options=Options()
     options.add_argument('--headless')
-    driver_path="/Users/yamaguchimasahiro/Desktop/python_lesson/webapi/chrome/chromedriver"
+    driver_path="./chrome/chromedriver"
 
     url="https://www.round1.co.jp/mypage/"
     url1="https://www.google.com/"
