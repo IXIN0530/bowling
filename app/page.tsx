@@ -24,7 +24,7 @@ export default function Home() {
   const [id1, setId1] = useState<number>(0);
   const [id2, setId2] = useState<number>(0);
   const [id3, setId3] = useState<number>(0);
-  const [pass, setPass] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const didMount = useRef<boolean>(false);
 
   //モーダルのクローズ処理
@@ -36,7 +36,13 @@ export default function Home() {
     setIsLoading(true);
     setError("");
     try {
-      const response = await api.get<scoreDataTypes[]>(`/login/${id1}/${id2}/${id3}/${pass}`)
+      const data = {
+        "id1": id1,
+        "id2": id2,
+        "id3": id3,
+        "password": password,
+      }
+      const response = await api.post<scoreDataTypes[]>(`/login`, data);
       if (response.data.length && allScoreData.length) {
         console.log(response.data)
         //最新のデータと今取得したデータが一致
@@ -71,23 +77,23 @@ export default function Home() {
       const jsonId1 = localStorage.getItem("id1");
       const jsonId2 = localStorage.getItem("id2");
       const jsonId3 = localStorage.getItem("id3");
-      const jsonPass = localStorage.getItem("pass");
+      const jsonPass = localStorage.getItem("password");
       console.log("getItemしました", jsonId1, jsonId2, jsonId3, jsonPass);
       if (jsonId1 && jsonId2 && jsonId3 && jsonPass) {
         const id1 = JSON.parse(jsonId1);
         const id2 = JSON.parse(jsonId2);
         const id3 = JSON.parse(jsonId3);
-        const pass = JSON.parse(jsonPass);
+        const password = JSON.parse(jsonPass);
         setId1(Number(id1));
         setId2(Number(id2));
         setId3(Number(id3));
-        setPass(pass);
+        setPassword(password);
         const jsonData = localStorage.getItem("allScoreData" + stringify({ id1, id2, id3 }));
         if (jsonData) {
           const data = JSON.parse(jsonData);
           setAllScoreData(data);
         }
-        console.log("getItemしました", Number(id1), Number(id2), Number(id3), pass);
+        console.log("getItemしました", Number(id1), Number(id2), Number(id3), password);
       }
     } else {
       if (allScoreData.length) {
@@ -95,8 +101,8 @@ export default function Home() {
         localStorage.setItem("id1", JSON.stringify(id1));
         localStorage.setItem("id2", JSON.stringify(id2));
         localStorage.setItem("id3", JSON.stringify(id3));
-        localStorage.setItem("pass", JSON.stringify(pass));
-        console.log("setItemしました", allScoreData, id1, id2, id3, pass);
+        localStorage.setItem("password", JSON.stringify(password));
+        console.log("setItemしました", allScoreData, id1, id2, id3, password);
       }
     }
   }, [allScoreData]);
@@ -143,8 +149,8 @@ export default function Home() {
         setId2={setId2}
         id3={id3}
         setId3={setId3}
-        password={pass}
-        setPassword={setPass} />
+        password={password}
+        setPassword={setPassword} />
     </div>
   );
 }

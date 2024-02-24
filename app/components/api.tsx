@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'https://bowback-gso78hlnf-ixins-projects.vercel.app',
-  timeout: 20000,
+  baseURL: 'http://127.0.0.1:8000',
+  timeout: 10000,
 });
 
 api.defaults.headers.common['Access-Control-Allow-Origin'] = '*';

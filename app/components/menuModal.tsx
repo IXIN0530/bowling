@@ -83,17 +83,17 @@ const MenuModal = ({ isOpen, setIsOpen, id1, setId1, id2, setId2, id3, setId3, p
                 <p className="text-white text-center">ログイン画面</p>
               </div>
               <div className="row-span-7 ">
-                <form onSubmit={loginSubmit} className=" h-full">
+                <form method="POST" onSubmit={loginSubmit} className=" h-full">
                   <div className="flex flex-col justify-evenly h-full">
                     <div className="flex justify-evenly">
-                      <input required type="text" placeholder="1234" ref={id1Ref} className="w-1/5 mx-1 bg-gray-500 text-white text-center rounded-xl py-2" />
+                      <input name="id1" required type="text" placeholder="1234" ref={id1Ref} className="w-1/5 mx-1 bg-gray-500 text-white text-center rounded-xl py-2" />
                       <p className="text-white my-auto">-</p>
-                      <input required type="text" placeholder="567" ref={id2Ref} className="w-1/5 mx-1 bg-gray-500 text-white text-center rounded-xl py-2" />
+                      <input name="id2" required type="text" placeholder="567" ref={id2Ref} className="w-1/5 mx-1 bg-gray-500 text-white text-center rounded-xl py-2" />
                       <p className="text-white my-auto">-</p>
-                      <input required type="text" placeholder="890" ref={id3Ref} className="w-1/5 mx-1 bg-gray-500 text-white text-center rounded-xl py-2" />
+                      <input name="id3" required type="text" placeholder="890" ref={id3Ref} className="w-1/5 mx-1 bg-gray-500 text-white text-center rounded-xl py-2" />
                     </div>
                     {/* <input type="text" placeholder="ユーザーID" className="w-4/5 mx-auto bg-gray-500 text-white text-center rounded-xl py-2" /> */}
-                    <input required type="" placeholder="パスワード" ref={passwordRef} className="w-4/5 mx-auto bg-gray-500 text-white text-center rounded-xl py-2" />
+                    <input name="pass" required type="" placeholder="パスワード" ref={passwordRef} className="w-4/5 mx-auto bg-gray-500 text-white text-center rounded-xl py-2" />
                     <button type="submit" className=" w-4/5 mx-auto bg-gradient-to-br from-emerald-600 to-emerald-400 text-white rounded-xl shadow-md py-2">保存</button>
                   </div>
                 </form>

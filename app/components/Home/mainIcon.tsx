@@ -4,13 +4,13 @@ import { easeOut } from "framer-motion";
 const MainIcon = () => {
   return (
     <motion.div
-      className="my-auto select-none"
+      className="my-auto "
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, y: [70, -10, 0] }}
       transition={{ duration: 0.7 }}
     >
       <div className="flex items-center ">
-        <motion.div className="w-8 h-8  border border-white select-none"
+        <motion.div className="w-8 h-8  border border-white"
           whileHover={{ scale: 1.5, rotate: 270, borderRadius: 100 + "%" }}
           transition={{ duration: 0.6, ease: easeOut }}
           initial={{ scale: 1.5, rotate: 270, borderRadius: 100 + "%" }}
