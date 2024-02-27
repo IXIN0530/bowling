@@ -6,6 +6,7 @@ bs4==0.0.2
 certifi==2023.11.17
 charset-normalizer==3.3.2
 click==8.1.7
+fake-useragent==1.4.0
 fastapi==0.109.0
 gunicorn==21.2.0
 h11==0.14.0

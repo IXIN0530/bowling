@@ -35,6 +35,9 @@ class AddedCipherAdapter(HTTPAdapter):
 async def read_root():
     return {"Hello":"Wod"}
 
+@app.get("/{name}")
+async def read_item(name:str):
+    return {"Hello":name}
 class Login(BaseModel):
     id1:int
     id2:int

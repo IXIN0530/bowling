@@ -93,7 +93,7 @@ const MenuModal = ({ isOpen, setIsOpen, id1, setId1, id2, setId2, id3, setId3, p
                       <input name="id3" required type="text" placeholder="890" ref={id3Ref} className="w-1/5 mx-1 bg-gray-500 text-white text-center rounded-xl py-2" />
                     </div>
                     {/* <input type="text" placeholder="ユーザーID" className="w-4/5 mx-auto bg-gray-500 text-white text-center rounded-xl py-2" /> */}
-                    <input name="pass" required type="" placeholder="パスワード" ref={passwordRef} className="w-4/5 mx-auto bg-gray-500 text-white text-center rounded-xl py-2" />
+                    <input name="pass" required type="password" placeholder="パスワード" ref={passwordRef} className="w-4/5 mx-auto bg-gray-500 text-white text-center rounded-xl py-2" />
                     <button type="submit" className=" w-4/5 mx-auto bg-gradient-to-br from-emerald-600 to-emerald-400 text-white rounded-xl shadow-md py-2">保存</button>
                   </div>
                 </form>
