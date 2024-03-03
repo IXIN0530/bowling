@@ -3,8 +3,10 @@ type Props = {
   data: scoreDataTypes[];
   setScoreModalData: (scoreModalData: scoreDataTypes[]) => void;
   setIsScoreOpen: (isScoreOpen: boolean) => void;
+  index: number;
+  whatDisplay: number[] | string[];
 }
-const DataList = ({ data, setScoreModalData, setIsScoreOpen }: Props) => {
+const DataList = ({ data, setScoreModalData, setIsScoreOpen, index, whatDisplay }: Props) => {
   const clicked = () => {
     setScoreModalData(data);
     setIsScoreOpen(true);
@@ -24,7 +26,8 @@ const DataList = ({ data, setScoreModalData, setIsScoreOpen }: Props) => {
       </div>
       <div className="col-span-1">
         <p className="text-center">
-          {data[4][1]}
+          {/* 読み込み時間のせいで、何も入っていない時は何も表示しないふうにしないとバグる */}
+          {!whatDisplay ? "" : whatDisplay[index]}
         </p>
       </div>
     </div>

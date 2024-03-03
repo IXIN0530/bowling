@@ -77,7 +77,7 @@ async def get_score_data(login:Login):
         today_score_data.append([item,score])
     
     #データをjsonファイルに保存（一応過去のデータがないと後々）
-    save_data(today_score_data)
+    # save_data(today_score_data)
     return today_score_data
 
 def save_data(data):

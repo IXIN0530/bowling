@@ -8,11 +8,24 @@ import MenuModal from "./components/menuModal";
 import MainIcon from "./components/Home/mainIcon";
 import { stringify } from "querystring";
 import api from "./components/api";
+import { kv } from "@vercel/kv";
+import next from "next";
+import { NextResponse } from "next/server";
+import functions from "./fanction";
+import DisplayChart from "./components/displayChart";
 
 export default function Home() {
   //スコア情報のモーダルが開かれているか
   const [isScoreOpen, setIsScoreOpen] = useState<boolean>(false);
   const [scoreModalData, setScoreModalData] = useState<scoreDataTypes[]>([]);
+
+  //データのグラフを表示する関連
+  // var sortedData: { [key: string]: number[] | string[] } = {};
+  const [sortedData, setSortedData] = useState<{ [key: string]: number[] | string[] }>({}); //ここで型を指定しないとエラーが出る
+  const [whatDisplay, setWhatDisplay] = useState<string>("ハイゲーム");
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setWhatDisplay(e.target.value);
+  }
 
   //メニューのモーダル関連
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -26,6 +39,10 @@ export default function Home() {
   const [id3, setId3] = useState<number>(0);
   const [password, setPassword] = useState<string>("");
   const didMount = useRef<boolean>(false);
+
+  //関数の読み込み
+  const { sortData, keys } = functions();
+
 
   //モーダルのクローズ処理
   const closeScoreModal = () => {
@@ -89,6 +106,7 @@ export default function Home() {
         setId3(Number(id3));
         setPassword(password);
         const jsonData = localStorage.getItem("allScoreData" + stringify({ id1, id2, id3 }));
+
         if (jsonData) {
           const data = JSON.parse(jsonData);
           setAllScoreData(data);
@@ -105,7 +123,25 @@ export default function Home() {
         console.log("setItemしました", allScoreData, id1, id2, id3, password);
       }
     }
+
+    //取得したデータの整理
+    if (allScoreData.length) {
+      console.log("sortData", sortData(allScoreData));
+      setSortedData(sortData(allScoreData));
+      console.log("sortedData", sortedData);
+    }
+    console.log("allScoreData", allScoreData);
   }, [allScoreData]);
+
+  // //実験
+  // const setData = async () => {
+  //   await kv.set("allScoreData" + stringify({ id1, id2, id3 }), JSON.stringify(allScoreData));
+  //   console.log("kv.setしました");
+  // }
+  // const getData = async () => {
+  //   const data = await kv.get("allScoreData" + stringify({ id1, id2, id3 }));
+  //   console.log("kv.getしました", NextResponse.json(data));
+  // }
   return (
     <div className=" mx-2 min-h-[100svh] grid grid-rows-10 ">
       {scoreModalData && <ScoreModal closeScoreModal={closeScoreModal} isOpen={isScoreOpen} scoreModalData={scoreModalData} />}
@@ -114,19 +150,26 @@ export default function Home() {
         <div className="pt-2">
           <p className="text-center text-white text-xl">Splitter</p>
         </div>
-        <div className="grid grid-cols-3  text-white ">
+        <div className="grid grid-cols-3 text-white">
           <p className="col-span-1 text-center">来店日</p>
           <p className="col-span-1 text-center">アベレージ</p>
-          <p className="col-span-1 text-center">ハイゲーム</p>
+          <select value={whatDisplay} onChange={handleChange} className="col-span-1 text-center bg-opacity-0 bg-white appearance-none">
+            {keys.map((key, index) => key == "ハイゲーム" ? <option value={key} className="opacity-50" selected>{key}</option> :
+              index ? <option value={key} className="opacity-50" >{key}</option> : false)}
+          </select>
         </div>
       </div>
       <div className="row-span-4 bg-slate-300">
         {isLoading ? (!error ? <p className="text-center my-4">loading...</p> : null)
-          : allScoreData.map((item, index) => (<DataList key={index} data={item} setScoreModalData={setScoreModalData} setIsScoreOpen={setIsScoreOpen} />))
+          : allScoreData.map((item, index) => (<DataList whatDisplay={sortedData ? sortedData[whatDisplay] : []} index={index} data={item} setScoreModalData={setScoreModalData} setIsScoreOpen={setIsScoreOpen} />))
         }
       </div>
-      <div className="row-span-4 bg-slate-400">
-
+      <div className="row-span-4 bg-slate-400 flex justify-evenly">
+        <DisplayChart
+          displayData={sortedData ? sortedData[whatDisplay] : []}
+          days={sortedData ? sortedData["来店日"] : []} />
+        {/* <button onClick={setData} className="border border-white">データを保存</button>
+        <button onClick={getData} className="border border-white">データを取得</button> */}
       </div>
       <div className="row-span-1 bg-slate-500 flex justify-evenly overflow-hidden">
         <motion.div
@@ -135,7 +178,7 @@ export default function Home() {
           transition={isLoading ? { duration: 2, repeat: Infinity, ease: "linear" } : {}}>
           <MainIcon />
         </motion.div>
-        <button onClick={fetchData} className="  bg-gradient-to-br from-emerald-600 to-emerald-400 block px-8 p-2 shadow-xl m-2 rounded-xl text-white font-lg">更新</button>
+        <button onClick={fetchData} className={!isLoading ? " bg-gradient-to-br from-emerald-600 to-emerald-400 block px-8 p-2 shadow-xl m-2 rounded-xl text-white font-lg" : "bg-gradient-to-br from-emerald-700 to-emerald-500 block px-8 p-2 shadow-xl m-2 rounded-xl text-white font-lg"}>更新</button>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" onClick={() => setIsMenuOpen(true)} className="w-10 h-10 my-auto text-white cursor-pointer">
           <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
         </svg>
