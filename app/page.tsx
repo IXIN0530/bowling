@@ -159,7 +159,7 @@ export default function Home() {
           </select>
         </div>
       </div>
-      <div className="row-span-4 bg-slate-300">
+      <div className="row-span-4 bg-slate-300 overflow-scroll">
         {isLoading ? (!error ? <p className="text-center my-4">loading...</p> : null)
           : allScoreData.map((item, index) => (<DataList whatDisplay={sortedData ? sortedData[whatDisplay] : []} index={index} data={item} setScoreModalData={setScoreModalData} setIsScoreOpen={setIsScoreOpen} />))
         }
