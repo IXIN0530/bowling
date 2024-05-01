@@ -39,9 +39,9 @@ async def read_root():
 async def read_item(name:str):
     return {"Hello":name}
 class Login(BaseModel):
-    id1:int
-    id2:int
-    id3:int
+    id1:str
+    id2:str
+    id3:str
     password:str
 @app.post("/login")
 async def get_score_data(login:Login):

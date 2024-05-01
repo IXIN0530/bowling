@@ -34,9 +34,9 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
-  const [id1, setId1] = useState<number>(0);
-  const [id2, setId2] = useState<number>(0);
-  const [id3, setId3] = useState<number>(0);
+  const [id1, setId1] = useState<string>("0");
+  const [id2, setId2] = useState<string>("0");
+  const [id3, setId3] = useState<string>("0");
   const [password, setPassword] = useState<string>("");
   const didMount = useRef<boolean>(false);
 
@@ -101,9 +101,9 @@ export default function Home() {
         const id2 = JSON.parse(jsonId2);
         const id3 = JSON.parse(jsonId3);
         const password = JSON.parse(jsonPass);
-        setId1(Number(id1));
-        setId2(Number(id2));
-        setId3(Number(id3));
+        setId1((id1));
+        setId2((id2));
+        setId3((id3));
         setPassword(password);
         const jsonData = localStorage.getItem("allScoreData" + stringify({ id1, id2, id3 }));
 

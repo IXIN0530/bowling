@@ -5,12 +5,12 @@ import { useState } from "react"
 type MenuModalProps = {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
-  id1: number
-  setId1: (id1: number) => void
-  id2: number
-  setId2: (id2: number) => void
-  id3: number
-  setId3: (id3: number) => void
+  id1: string
+  setId1: (id1: string) => void
+  id2: string
+  setId2: (id2: string) => void
+  id3: string
+  setId3: (id3: string) => void
   password: string
   setPassword: (password: string) => void
 }
@@ -27,9 +27,9 @@ const MenuModal = ({ isOpen, setIsOpen, id1, setId1, id2, setId2, id3, setId3, p
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const loginSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setId1(parseInt(id1Ref.current!.value));
-    setId2(parseInt(id2Ref.current!.value));
-    setId3(parseInt(id3Ref.current!.value));
+    setId1((id1Ref.current!.value));
+    setId2((id2Ref.current!.value));
+    setId3((id3Ref.current!.value));
     setPassword(passwordRef.current!.value);
     setIsLoginOpen(false);
     setIsWayOpen(false);
