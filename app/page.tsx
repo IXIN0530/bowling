@@ -143,7 +143,7 @@ export default function Home() {
   //   console.log("kv.getしました", NextResponse.json(data));
   // }
   return (
-    <div className=" mx-2 min-h-[100svh] grid grid-rows-10 ">
+    <div className=" mx-2 min-h-[100svh] grid grid-rows-10">
       {scoreModalData && <ScoreModal closeScoreModal={closeScoreModal} isOpen={isScoreOpen} scoreModalData={scoreModalData} />}
       <div className="flex flex-col justify-between row-span-1  bg-gradient-to-b from-gray-600 to-gray-400">
         {/* {error ? <p className="text-center">{error}アカウント情報が間違っているか通信環境が悪い可能性があります。</p> : null} */}
@@ -159,10 +159,12 @@ export default function Home() {
           </select>
         </div>
       </div>
-      <div className="row-span-4 bg-slate-300 overflow-scroll">
-        {isLoading ? (!error ? <p className="text-center my-4">loading...</p> : null)
-          : allScoreData.map((item, index) => (<DataList whatDisplay={sortedData ? sortedData[whatDisplay] : []} index={index} data={item} setScoreModalData={setScoreModalData} setIsScoreOpen={setIsScoreOpen} />))
-        }
+      <div className=" relative row-span-4 bg-slate-300 overflow-scroll">
+        <div className="absolute inset-0">
+          {isLoading ? (!error ? <p className="text-center my-4">loading...</p> : null)
+            : allScoreData.map((item, index) => (<DataList whatDisplay={sortedData ? sortedData[whatDisplay] : []} index={index} data={item} setScoreModalData={setScoreModalData} setIsScoreOpen={setIsScoreOpen} />))
+          }
+        </div>
       </div>
       <div className="row-span-4 bg-slate-400 flex justify-evenly">
         <DisplayChart
