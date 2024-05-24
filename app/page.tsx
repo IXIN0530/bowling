@@ -65,6 +65,13 @@ export default function Home() {
         //最新のデータと今取得したデータが一致
         if (allScoreData[allScoreData.length - 1][3][1] == response.data[3][1] && allScoreData[allScoreData.length - 1][0][1] == response.data[0][1] && allScoreData[allScoreData.length - 1][1][1] == response.data[1][1] && allScoreData[allScoreData.length - 1][2][1] == response.data[2][1]) {
           console.log("最新のデータと前回のデータが一致");
+          //同じ日にちだけど更新した場合
+          if (allScoreData[allScoreData.length - 1][3][0] == response.data[3][0]) {
+            console.log("同じ日にちだけど更新した場合");
+            const _allScoreData = allScoreData.slice(0, allScoreData.length - 1);
+            _allScoreData.push(response.data);
+            setAllScoreData(_allScoreData);
+          }
         }
         else {
           //最新のデータと前回のデータが一致しない
