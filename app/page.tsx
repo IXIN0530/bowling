@@ -160,7 +160,7 @@ export default function Home() {
         <div className="grid grid-cols-3 text-white">
           <p className="col-span-1 text-center">来店日</p>
           <p className="col-span-1 text-center">アベレージ</p>
-          <select value={whatDisplay} onChange={handleChange} className="col-span-1 text-center bg-opacity-0 bg-white appearance-none">
+          <select value={whatDisplay} onChange={handleChange} className="col-span-1 text-center bg-opacity-0 border border-white bg-white appearance-none rounded-lg">
             {keys.map((key, index) => key == "ハイゲーム" ? <option value={key} className="opacity-50" selected>{key}</option> :
               index ? <option value={key} className="opacity-50" >{key}</option> : false)}
           </select>
