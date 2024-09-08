@@ -43,7 +43,7 @@ export default function Home() {
   //関数の読み込み
   const { sortData, keys } = functions();
 
-
+  console.log("password", password);
   //モーダルのクローズ処理
   const closeScoreModal = () => {
     setIsScoreOpen(false);
