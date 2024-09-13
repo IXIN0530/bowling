@@ -15,6 +15,9 @@ const config: Config = {
       },
       boxShadow: {
         "side-inner": "0px 2px 5px  #0000004f inset,5px 0px 5px   #ffffffaa,-5px 0px 5px  #ffffffaa",
+      },
+      backgroundColor: {
+        "PointListBack": "bg-black",
       }
     },
   },
