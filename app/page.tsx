@@ -8,9 +8,6 @@ import MenuModal from "./components/menuModal";
 import MainIcon from "./components/Home/mainIcon";
 import { stringify } from "querystring";
 import api from "./components/api";
-import { kv } from "@vercel/kv";
-import next from "next";
-import { NextResponse } from "next/server";
 import functions from "./fanction";
 import DisplayChart from "./components/displayChart";
 import Image from "next/image";
@@ -57,6 +54,17 @@ export default function Home() {
   //モーダルのクローズ処理
   const closeScoreModal = () => {
     setIsScoreOpen(false);
+  }
+
+  //サーバー起動関数
+  const startServer = async () => {
+    try {
+      await api.get("/");
+      alert("サーバーが起動しました。");
+    }
+    catch (err: any) {
+
+    }
   }
   //データの更新関数
   const fetchData = async () => {
@@ -112,6 +120,7 @@ export default function Home() {
   //データの読み込み
   useEffect(() => {
     if (!didMount.current) {
+      startServer();
       didMount.current = true;
       const jsonId1 = localStorage.getItem("id1");
       const jsonId2 = localStorage.getItem("id2");
