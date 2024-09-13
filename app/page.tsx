@@ -3,7 +3,7 @@ import { allScoreDataType, scoreDataTypes } from "./types";
 import React, { useEffect, useRef, useState } from "react";
 import DataList from "./components/dataList";
 import ScoreModal from "./components/scoreModal";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import MenuModal from "./components/menuModal";
 import MainIcon from "./components/Home/mainIcon";
 import { stringify } from "querystring";
@@ -92,6 +92,11 @@ export default function Home() {
     }
     setIsLoading(false);
   }
+
+  //テスト
+
+
+
   //localの初期化
   // localStorage.removeItem("allScoreData" + stringify({ id1, id2, id3 }));
   //データの読み込み
@@ -173,24 +178,27 @@ export default function Home() {
           }
         </div>
       </div>
-      <div className="row-span-4 bg-slate-400 flex justify-evenly">
+      <div className="row-span-4 bg-slate-400 flex justify-evenly"
+      >
         <DisplayChart
           displayData={sortedData ? sortedData[whatDisplay] : []}
           days={sortedData ? sortedData["来店日"] : []} />
-        {/* <button onClick={setData} className="border border-white">データを保存</button>
-        <button onClick={getData} className="border border-white">データを取得</button> */}
+
       </div>
       <div className="row-span-1 bg-slate-500 flex justify-evenly overflow-hidden">
         <motion.div
           className="my-auto"
           animate={isLoading ? { rotate: [0, 180, 360], scale: [1, 1.5, 1] } : {}}
           transition={isLoading ? { duration: 2, repeat: Infinity, ease: "linear" } : {}}>
-          <MainIcon />
+          <MainIcon
+            isLoading={isLoading} />
         </motion.div>
+
         <button onClick={fetchData} className={!isLoading ? " bg-gradient-to-br from-emerald-600 to-emerald-400 block px-8 p-2 shadow-xl m-2 rounded-xl text-white font-lg" : "bg-gradient-to-br from-emerald-700 to-emerald-500 block px-8 p-2 shadow-xl m-2 rounded-xl text-white font-lg"}>更新</button>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" onClick={() => setIsMenuOpen(true)} className="w-10 h-10 my-auto text-white cursor-pointer">
+        <motion.svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" onClick={() => setIsMenuOpen(true)} className="w-10 h-10 my-auto text-white cursor-pointer"
+          animate={!isMenuOpen ? { rotate: 0, opacity: 1, scale: 1 } : { rotate: -90, opacity: 0, scale: 0.8 }}>
           <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-        </svg>
+        </motion.svg>
       </div>
       <MenuModal
         isOpen={isMenuOpen}

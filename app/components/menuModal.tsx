@@ -57,12 +57,15 @@ const MenuModal = ({ isOpen, setIsOpen, id1, setId1, id2, setId2, id3, setId3, p
   return (
     <div className="fixed z-50 inset-2 overflow-y-auto h-4/5 "
       onClick={hundleBackClick}>
-      <div className=" fixed inset-0 bg-black opacity-65  transition-opacity"></div>
+      <motion.div className=" fixed inset-0 bg-black"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.45 }}
+        transition={{ duration: "0.15" }} />
 
       <motion.div className=" overflow-hidden fixed h-4/5 w-full right-0 top-10 rounded-xl bg-gradient-to-br from-gray-800 to-gray-500 shadow-xl transform transition-all "
         onClick={hundleModalClick}
-        initial={{ x: "300%" }}
-        animate={{ x: "50%" }}
+        initial={{ x: "300%", scale: 0 }}
+        animate={{ x: "50%", scale: 1 }}
         transition={{ duration: "0.03" }}>
         {/* ここからがmodalの中身 */}
 

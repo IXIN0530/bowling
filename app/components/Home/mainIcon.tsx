@@ -1,7 +1,11 @@
 "use client"
 import { motion } from "framer-motion";
 import { easeOut } from "framer-motion";
-const MainIcon = () => {
+
+type Props = {
+  isLoading: boolean,
+}
+const MainIcon = ({ isLoading }: Props) => {
   return (
     <motion.div
       className="my-auto select-none"
