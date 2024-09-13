@@ -1,5 +1,5 @@
 "use client"
-import { allScoreDataType, scoreDataTypes } from "./types";
+import { allScoreDataType, popUpElement, scoreDataTypes } from "./types";
 import React, { useEffect, useRef, useState } from "react";
 import DataList from "./components/dataList";
 import ScoreModal from "./components/scoreModal";
@@ -11,11 +11,14 @@ import api from "./components/api";
 import functions from "./fanction";
 import DisplayChart from "./components/displayChart";
 import Image from "next/image";
+import PopUp from "./components/Home/popUp";
 
 export default function Home() {
 
   //サーバーが起動しているか
   const [isServerOpen, setIsServerOpen] = useState<boolean>(false);
+  //ポップアップの情報
+  const [popUpElements, setPopUpElements] = useState<popUpElement[]>([]);
   //スコア情報のモーダルが開かれているか
   const [isScoreOpen, setIsScoreOpen] = useState<boolean>(false);
   const [scoreModalData, setScoreModalData] = useState<scoreDataTypes[]>([]);
@@ -50,6 +53,18 @@ export default function Home() {
     setIsSelectClicked(true);
   }
 
+  //popupを出したいときに呼び出す関数
+  const makePopup = (e: any, text: string) => {
+    const x: number = e.changedTouches ? (e.changedTouches[0].pageX) : e.pageX;
+    const y: number = e.changedTouches ? (e.changedTouches[0].pageY) : e.pageY;
+    setPopUpElements([...popUpElements, { text: text, touchX: x, touchY: y, mode: "here" }]);
+    console.log("popUpElements", popUpElements);
+  }
+
+  const normalPopUp = (text: string) => {
+    setPopUpElements([...popUpElements, { text: text, touchX: 0, touchY: 0, mode: "normal" }]);
+  }
+
   //関数の読み込み
   const { sortData, keys } = functions();
 
@@ -63,7 +78,8 @@ export default function Home() {
   const startServer = async () => {
     try {
       await api.get("/");
-      alert("サーバーが起動しました。");
+      // alert("サーバーが起動しました。");
+      normalPopUp("サーバーが起動しました。");
       setIsServerOpen(true);
     }
     catch (err: any) {
@@ -72,7 +88,7 @@ export default function Home() {
   }
   //データの更新関数
   const fetchData = async () => {
-    if (!isServerOpen) alert("サーバーがまだ起動していないため起動に時間がかかります。");
+    if (!isServerOpen) normalPopUp("サーバーが起動していません。時間を要します。");
     setIsLoading(true);
     setError("");
     try {
@@ -108,10 +124,10 @@ export default function Home() {
         setAllScoreData([...allScoreData, response.data]);
       }
 
-
+      normalPopUp("データの取得に成功しました。");
     } catch (err: any) {
       setError(err.message)
-      alert("アカウント情報が間違っているか通信環境が悪い可能性があります。")
+      normalPopUp("アカウント情報が間違っているか通信環境が悪い可能性があります。");
     }
     setIsLoading(false);
   }
@@ -183,7 +199,13 @@ export default function Home() {
       {scoreModalData && <ScoreModal closeScoreModal={closeScoreModal} isOpen={isScoreOpen} scoreModalData={scoreModalData} />}
       <div className="relative flex flex-col justify-between row-span-1  bg-[#aaaaaa55]">
         <Image src={"/backTest.gif"} className=" absolute inset-0 h-full w-full -z-10" width={50} height={10} alt="" />
-        <div className="pt-2">
+        {/* ポップアップ */}
+        {popUpElements.map((item, key) => (
+          <PopUp touchX={item.touchX}
+            touchY={item.touchY}
+            text={item.text}
+            mode={item.mode} />))}
+        <div className="pt-2 my-auto">
           <p className="text-center text-white text-2xl">Splitter</p>
         </div>
         <div className="grid grid-cols-3 text-white">
@@ -206,7 +228,8 @@ export default function Home() {
         </div>
       </div>
       <div className="row-span-4 bg-slate-400 flex justify-evenly"
-      >
+        onTouchStart={() => makePopup(event, "グラフをタッチしました")}>
+
         <DisplayChart
           displayData={sortedData ? sortedData[whatDisplay] : []}
           days={sortedData ? sortedData["来店日"] : []} />
