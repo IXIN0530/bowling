@@ -13,11 +13,15 @@ import next from "next";
 import { NextResponse } from "next/server";
 import functions from "./fanction";
 import DisplayChart from "./components/displayChart";
+import Image from "next/image";
 
 export default function Home() {
   //スコア情報のモーダルが開かれているか
   const [isScoreOpen, setIsScoreOpen] = useState<boolean>(false);
   const [scoreModalData, setScoreModalData] = useState<scoreDataTypes[]>([]);
+
+  //selectを一回クリックしたか
+  const [isSelectClicked, setIsSelectClicked] = useState<boolean>(false);
 
   //データのグラフを表示する関連
   // var sortedData: { [key: string]: number[] | string[] } = {};
@@ -39,6 +43,12 @@ export default function Home() {
   const [id3, setId3] = useState<string>("0");
   const [password, setPassword] = useState<string>("");
   const didMount = useRef<boolean>(false);
+
+  //selectが一回押されたかどうか
+  const selectClicked = () => {
+    if (isSelectClicked) return;
+    setIsSelectClicked(true);
+  }
 
   //関数の読み込み
   const { sortData, keys } = functions();
@@ -157,18 +167,21 @@ export default function Home() {
   return (
     <div className=" mx-2 min-h-[100svh] grid grid-rows-10">
       {scoreModalData && <ScoreModal closeScoreModal={closeScoreModal} isOpen={isScoreOpen} scoreModalData={scoreModalData} />}
-      <div className="flex flex-col justify-between row-span-1  bg-gradient-to-b from-gray-600 to-gray-400">
-        {/* {error ? <p className="text-center">{error}アカウント情報が間違っているか通信環境が悪い可能性があります。</p> : null} */}
+      <div className="relative flex flex-col justify-between row-span-1  bg-[#aaaaaa55]">
+        <Image src={"/backTest.gif"} className=" absolute inset-0 h-full w-full -z-10" width={50} height={10} alt="" />
         <div className="pt-2">
-          <p className="text-center text-white text-xl">Splitter</p>
+          <p className="text-center text-white text-2xl">Splitter</p>
         </div>
         <div className="grid grid-cols-3 text-white">
           <p className="col-span-1 text-center">来店日</p>
           <p className="col-span-1 text-center">アベレージ</p>
-          <select value={whatDisplay} onChange={handleChange} className="col-span-1 text-center bg-opacity-0 border border-white bg-white appearance-none rounded-lg">
+          <motion.select value={whatDisplay} onChange={handleChange} className="col-span-1 text-center bg-opacity-0  bg-white appearance-none rounded-lg"
+            onClick={selectClicked}
+            animate={!isSelectClicked ? { scale: [1, 1.2, 1] } : {}}
+            transition={!isSelectClicked ? { duration: [1], repeat: Infinity, ease: "linear" } : {}}>
             {keys.map((key, index) => key == "ハイゲーム" ? <option value={key} className="opacity-50" selected>{key}</option> :
               index ? <option value={key} className="opacity-50" >{key}</option> : false)}
-          </select>
+          </motion.select>
         </div>
       </div>
       <div className=" relative row-span-4 bg-slate-300 overflow-scroll">
@@ -183,9 +196,9 @@ export default function Home() {
         <DisplayChart
           displayData={sortedData ? sortedData[whatDisplay] : []}
           days={sortedData ? sortedData["来店日"] : []} />
-
       </div>
-      <div className="row-span-1 bg-slate-500 flex justify-evenly overflow-hidden">
+      <div className=" relative row-span-1 bg-[#aaaaaa55] flex justify-evenly overflow-hidden">
+        <Image src={"/backTest.gif"} className=" absolute inset-0 h-full w-full -z-10" width={50} height={10} alt="" />
         <motion.div
           className="my-auto"
           animate={isLoading ? { rotate: [0, 180, 360], scale: [1, 1.5, 1] } : {}}
