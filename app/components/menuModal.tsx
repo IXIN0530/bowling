@@ -14,6 +14,7 @@ type MenuModalProps = {
   password: string
   setPassword: (password: string) => void
 }
+
 const MenuModal = ({ isOpen, setIsOpen, id1, setId1, id2, setId2, id3, setId3, password, setPassword }: MenuModalProps) => {
   //モダールがオープンされているかの確認
   if (!isOpen) return null;
@@ -124,7 +125,7 @@ const MenuModal = ({ isOpen, setIsOpen, id1, setId1, id2, setId2, id3, setId3, p
               <div className="row-span-1 flex flex-col justify-center">
                 <p className="text-white text-center font-bold">利用方法</p>
               </div>
-              <div className="row-span-8 flex flex-col justify-between">
+              <div className={" row-span-8 flex flex-col justify-between"}>
                 <p className="text-white mx-4 text-xs">1.ログイン画面でユーザーIDとパスワードを入力して保存ボタンを押してください</p>
                 <p className="text-white mx-4 text-xs">2.更新ボタンを押してデータを取得してください(何度か更新しないと取得されない場合があります！)</p>
                 <p className="text-white mx-4 text-xs">3.データを取得すると、スコア一覧とハイスコアのグラフが表示されます</p>

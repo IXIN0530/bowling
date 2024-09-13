@@ -6,6 +6,9 @@ type Props = {
   index: number;
   whatDisplay: number[] | string[];
 }
+
+
+
 const DataList = ({ data, setScoreModalData, setIsScoreOpen, index, whatDisplay }: Props) => {
   const clicked = () => {
     setScoreModalData(data);
@@ -14,7 +17,7 @@ const DataList = ({ data, setScoreModalData, setIsScoreOpen, index, whatDisplay 
   }
   return (
     <div className="w-full grid grid-cols-3 bg-gradient-to-br from-gray-500 to-gray-400  text-white" onClick={clicked}>
-      <div className=" col-span-1 shadow-side-inner py-2 ">
+      <div className={"col-span-1 shadow-side-inner py-2"}>
         <p className="text-center">
           {data[0][1]}/{data[1][1]}/{data[2][1]}
         </p>
