@@ -13,6 +13,9 @@ import DisplayChart from "./components/displayChart";
 import Image from "next/image";
 
 export default function Home() {
+
+  //サーバーが起動しているか
+  const [isServerOpen, setIsServerOpen] = useState<boolean>(false);
   //スコア情報のモーダルが開かれているか
   const [isScoreOpen, setIsScoreOpen] = useState<boolean>(false);
   const [scoreModalData, setScoreModalData] = useState<scoreDataTypes[]>([]);
@@ -61,6 +64,7 @@ export default function Home() {
     try {
       await api.get("/");
       alert("サーバーが起動しました。");
+      setIsServerOpen(true);
     }
     catch (err: any) {
 
@@ -68,6 +72,7 @@ export default function Home() {
   }
   //データの更新関数
   const fetchData = async () => {
+    if (!isServerOpen) alert("サーバーがまだ起動していないため起動に時間がかかります。");
     setIsLoading(true);
     setError("");
     try {
