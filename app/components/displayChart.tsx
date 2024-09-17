@@ -28,7 +28,7 @@ const DisplayChart = ({ displayData, days }: Props) => {
 
   return (
     <>
-      <div className=" border border-none bg-gray-300 h-full flex flex-col justify-center w-full items-center" >
+      <div className=" border border-none bg-default-bg h-full flex flex-col justify-center w-full items-center" >
         <Line className=" "
           data={{
             labels: days as number[],

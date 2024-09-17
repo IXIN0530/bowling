@@ -21,7 +21,7 @@ export default function RootLayout({
       <head>
         <title>Splitter</title>
       </head>
-      <body className={inter.className + " bg-gray-300 opacity-100"}>{children}</body>
+      <body className={inter.className + " bg-default-bg opacity-100"}>{children}</body>
     </html>
   );
 }

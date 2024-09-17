@@ -18,6 +18,7 @@ const config: Config = {
       },
       backgroundColor: {
         "PointListBack": "bg-black",
+        "default-bg": "#F2FBFF",
       }
     },
   },

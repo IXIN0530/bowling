@@ -220,14 +220,16 @@ export default function Home() {
           </motion.select>
         </div>
       </div>
-      <div className=" relative row-span-4 bg-slate-300 overflow-scroll">
-        <div className="absolute inset-0">
-          {isLoading ? (!error ? <p className="text-center my-4">loading...</p> : null)
+      <div className=" relative row-span-4 bg-slate-0 overflow-scroll">
+        <div className="absolute inset-0 ">
+          {isLoading ? (!error ?
+            <Image src={"/loading.gif"} className=" h-full w-full opacity-80 " width={10} height={10} alt="" />
+            : null)
             : allScoreData.map((item, index) => (<DataList whatDisplay={sortedData ? sortedData[whatDisplay] : []} index={index} data={item} setScoreModalData={setScoreModalData} setIsScoreOpen={setIsScoreOpen} />))
           }
         </div>
       </div>
-      <div className="row-span-4 bg-slate-400 flex justify-evenly"
+      <div className="row-span-4 bg-default-bg flex justify-evenly"
         onTouchStart={() => makePopup(event, "グラフをタッチしました")}>
 
         <DisplayChart

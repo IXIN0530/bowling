@@ -2,6 +2,7 @@
 import { FormEvent, MouseEvent, useRef } from "react"
 import { motion } from "framer-motion"
 import { useState } from "react"
+import WaitTime from "./menu/waitTime"
 type MenuModalProps = {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
@@ -21,6 +22,7 @@ const MenuModal = ({ isOpen, setIsOpen, id1, setId1, id2, setId2, id3, setId3, p
 
   const [isLoginOpen, setIsLoginOpen] = useState<boolean>(false);
   const [isWayOpen, setIsWayOpen] = useState<boolean>(false);
+  const [isWaitTimeOpen, setIsWaitTimeOpen] = useState<boolean>(false);
 
   const id1Ref = useRef<HTMLInputElement | null>(null);
   const id2Ref = useRef<HTMLInputElement | null>(null);
@@ -32,8 +34,10 @@ const MenuModal = ({ isOpen, setIsOpen, id1, setId1, id2, setId2, id3, setId3, p
     setId2((id2Ref.current!.value));
     setId3((id3Ref.current!.value));
     setPassword(passwordRef.current!.value);
+
     setIsLoginOpen(false);
     setIsWayOpen(false);
+    setIsWaitTimeOpen(false)
   }
 
   const hundleModalClick = (e: MouseEvent) => {
@@ -71,7 +75,7 @@ const MenuModal = ({ isOpen, setIsOpen, id1, setId1, id2, setId2, id3, setId3, p
         {/* ここからがmodalの中身 */}
 
         <motion.div className="min-h-full grid grid-cols-2"
-          animate={{ x: (isLoginOpen || isWayOpen) ? "-50%" : 0 }}>
+          animate={{ x: (isLoginOpen || isWayOpen || isWaitTimeOpen) ? "-50%" : 0 }}>
           <div className="grid grid-rows-10 col-span-1">
             <div className="row-span-1 flex flex-col justify-center">
               <p className="text-white text-center font-bold">メニュー</p>
@@ -79,11 +83,19 @@ const MenuModal = ({ isOpen, setIsOpen, id1, setId1, id2, setId2, id3, setId3, p
             <div className=" mx-4 row-span-1">
               <p className="text-center text-white text-xs italic">Splitterはラウンドワンボウリングのスコアを管理するアプリです</p>
             </div>
-            <div className="row-span-5">
+            <div className="row-span-4">
               {/* <p className="text-white">menues</p> */}
             </div>
+            <div className="row-span-1">
+              <p onClick={() => setIsWaitTimeOpen(true)}
+                className="text-center text-white border-b border-white mx-4 pb-2">
+                待ち時間検索
+              </p>
+            </div>
             <div className="row-span-1" >
-              <p onClick={wayClick} className="text-center text-white border-b border-white mx-4 pb-2">利用方法</p>
+              <p onClick={wayClick} className="text-center text-white border-b border-white mx-4 pb-2">
+                利用方法
+              </p>
             </div>
             <div className="row-span-1 ">
               <p onClick={loginClick} className="text-white border border-gray-500 mx-4 py-2 rounded-xl bg-gradient-to-br from-gray-600 to-gray-500 text-center shadow-md">ログイン</p>
@@ -138,6 +150,13 @@ const MenuModal = ({ isOpen, setIsOpen, id1, setId1, id2, setId2, id3, setId3, p
                 </svg>
               </div>
             </div>
+          }
+
+          {/* 待ち時間検索ボタンが押されたとき */}
+          {
+            isWaitTimeOpen &&
+            <WaitTime isWaitTimeOpen={isWaitTimeOpen}
+              setIsWaitTimeOpen={setIsWaitTimeOpen} />
           }
 
         </motion.div>
