@@ -13,6 +13,7 @@ import DisplayChart from "./components/displayChart";
 import Image from "next/image";
 import PopUp from "./components/Home/popUp";
 
+
 export default function Home() {
 
   //サーバーが起動しているか
