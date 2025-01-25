@@ -22,7 +22,8 @@ const Display = ({ num, big }: Props) => {
     return (
       <Image src={`/DamFont/Dam${num}.png`} className="h-full"
         height={1} width={(num == "1" ? sizeOf1 : sizeOfElse)}
-        alt="" />
+        alt=""
+        unoptimized />
     )
   }
   //少数部分
@@ -32,7 +33,8 @@ const Display = ({ num, big }: Props) => {
         <div className=" row-span-1"></div>
         <Image src={`/DamFont/Dam${num}.png`} className="h-full row-span-1"
           height={1} width={(num == "1" ? sizeOf1 / 2 : sizeOfElse / 2)}
-          alt="" />
+          alt=""
+          unoptimized />
       </div>
     )
 
